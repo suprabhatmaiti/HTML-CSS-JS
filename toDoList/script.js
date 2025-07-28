@@ -1,6 +1,7 @@
 var list=document.getElementById('listContainer');
 var inputTask=document.getElementById('inputText');
-var completedTask=document.getElementById("completedTask")
+var completedTask=document.getElementById("completedTask");
+var taskCount=document.getElementById("taskCount");
 
 function addFunc(){
     if(inputTask.value ===''){
@@ -57,14 +58,26 @@ completedTask.addEventListener("click",function(e){
     saveData();
 },false)
 
+function updateCount(){
+    var toDo=list.getElementsByTagName("li").length;
+    var completed=completedTask.getElementsByTagName("li").length;
+    document.getElementById("counter").textContent=`To-Do: ${toDo} | Completed: ${completed}`;
+    
+    
+}
+
 function saveData(){
-    localStorage.setItem("todo",list.innerHTML);
-    localStorage.setItem("completed",completedTask.innerHTML)
+    localStorage.setItem("todoList",list.innerHTML);
+    localStorage.setItem("completedList",completedTask.innerHTML)
+    localStorage.setItem("count",document.getElementById("counter").textContent);
+    updateCount();
 }
 function showData(){
-    list.innerHTML=localStorage.getItem("todo");
-    completedTask.innerHTML=localStorage.getItem("completed")
-}
+    list.innerHTML=localStorage.getItem("todoList");
+    completedTask.innerHTML=localStorage.getItem("completedList")
+    document.getElementById("counter").textContent=localStorage.getItem("count");
+    updateCount();
+}   
 showData();
 
 window.onload=function(){

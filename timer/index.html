@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Countdown Timer</h1>
+        <div class="timer">
+            <span id="days">00</span>
+            <span id="middle">:</span>
+            <span id="hrs">00</span>
+            <span id="middle">:</span>
+            <span id="mins">00</span>
+            <span id="middle">:</span>
+            <span id="secs">00</span>
+        </div>
+        <div class="inputField">
+            <label for="myDate">Select Date and Time : </label>
+        <input type="datetime-local" id="inputDate" name="selectedDate">
+        <!-- <input type="time" id="inputTime" name="Seletedtime"> -->
+        </div>
+        <div class="ctrlBtns">
+            <button class="startButton" id="startBtn" onclick="startFunc()">Start</button>
+            <button class="resetButton" id="resetBtn" onclick="resetFunc()">Reset</button>
+        </div>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
