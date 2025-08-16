@@ -1,0 +1,19 @@
+.custom-counter{
+    list-style: none;
+    counter-reset: custom-list;
+}
+.custom-counter li{
+    counter-increment: custom-list;
+    padding: 10px;
+    cursor: pointer;
+
+}
+.custom-counter li::before{
+    
+    content: counter(custom-list)". ";
+    color:darkblue;
+    font-weight: bold;
+}
+.custom-counter li:hover{
+    font-size: large;
+}

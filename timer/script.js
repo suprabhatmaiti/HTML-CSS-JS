@@ -39,9 +39,9 @@ function startFunc(){
             updateTimer(formattedDays, formattedHours, formattedMinutes, formattedSeconds);
             console.log(`${formattedHours}:${formattedMinutes}:${formattedSeconds}`);
 
-            if(Math.abs(today-target)<=1000){
+            if(Math.abs(today-target)<=0){
                 clearInterval(interValid);
-                return;
+                timeUP();
             }
             
         }, 1000);
@@ -62,4 +62,7 @@ function resetFunc(){
     updateTimer('00', '00', '00', '00');
     inputDateTime.value='';
 
+}
+async function timeUP(){
+    alert("Time's up!");
 }

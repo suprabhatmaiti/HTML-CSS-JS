@@ -54,4 +54,24 @@ ul li .checked{
     text-decoration: line-through;
     color: grey;
 }
+#completedTask{
+    margin-top: -15px;
+}
 
+.dark-Light-Theme{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: darkslategray;
+}
+.DarkTheme{
+    background-color: #121212;
+    
+} 
+.darkThemeButton{
+    background-color: #1e1e1e;
+} 

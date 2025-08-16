@@ -1,85 +1,158 @@
-var list=document.getElementById('listContainer');
-var inputTask=document.getElementById('inputText');
-var completedTask=document.getElementById("completedTask");
-var taskCount=document.getElementById("taskCount");
+let list=document.getElementById('listContainer');
+let inputBox=document.getElementById('inputText');
+let completedTask=document.getElementById("completedTask");
+let taskCount=document.getElementById("taskCount");
+
+const todoCount={
+    toDo:0,
+    completed:0
+}
+let toDoList=[];
+let completedList=[];
 
 function addFunc(){
-    if(inputTask.value ===''){
+    if(inputBox.value ===''){
         alert("empty");
 
     }else{
-        // console.log(inputTask.value);
-        var li=document.createElement("li");
-        var span=document.createElement("span");
-        span.innerHTML=inputTask.value;
+        toDoList.push(inputBox.value);
+
+        let li=document.createElement("li");
+        let span=document.createElement("span");
+        span.innerHTML=inputBox.value;
         li.appendChild(span);
         list.appendChild(li);
         let button =document.createElement("button");
         button.innerHTML="X";
         li.appendChild(button);
     }
-    inputTask.value="";
-    inputTask.focus();
+    inputBox.value="";
+    inputBox.focus();
     saveData();
 }
 
-inputTask.addEventListener("keydown",function(e){
+function addItem(item){
+    let li=document.createElement("li");
+    let span=document.createElement("span");
+    span.innerHTML=item;
+    li.appendChild(span);
+    list.appendChild(li);
+    let button =document.createElement("button");
+    button.innerHTML="X";
+    li.appendChild(button);
+}
+function addCompletedItem(item){
+    let li=document.createElement("li");
+    let span=document.createElement("span");
+    span.innerHTML=item;
+    span.classList.add("checked");
+    li.appendChild(span);
+    completedTask.appendChild(li);
+    let button =document.createElement("button");
+    button.innerHTML="X";
+    li.appendChild(button);
+}
+
+inputBox.addEventListener("keydown",function(e){
     if(e.key==="Enter"){
         document.getElementById("addbtn").click();
     }
-
 })
 
 list.addEventListener("click",function(e){
     if(e.target.tagName==="BUTTON"){
         e.target.parentElement.remove();
-
-    }else if(e.target.tagName==="SPAN"){
+        // console.log(e.target.previousElementSibling.innerHTML);
+        const itemText = e.target.previousElementSibling.innerHTML;
+        toDoList = toDoList.filter(item => item !== itemText);
+        console.log(toDoList);
+    }else if(e.target.tagName==="SPAN" ){
         e.target.classList.add("checked");
-        const li=e.target.parentElement;
-        // e.target.parentElement.remove();
-        completedTask.appendChild(li);
-       
+        completedList.push(e.target.innerText);
+        toDoList = toDoList.filter(item => item !== e.target.innerText);
     }
     saveData();
+    showData();
 },false)
 
 completedTask.addEventListener("click",function(e){
-    if(e.target.tagName=="BUTTON"){
+    e.stopPropagation();
+    e.preventDefault();
+   if(e.target.tagName==="BUTTON"){
         e.target.parentElement.remove();
-    }
-    else if (e.target.tagName === "SPAN") {
-        e.stopPropagation(); 
+        const itemText = e.target.previousElementSibling.innerHTML;
+        completedList = completedList.filter(item => item !== itemText);
+        console.log(completedList);
+    }else if(e.target.tagName==="SPAN" ){
         e.target.classList.remove("checked");
-        const li=e.target.parentElement;
-        list.appendChild(li);
-        
+        toDoList.push(e.target.innerText);
+        completedList = completedList.filter(item => item !== e.target.innerText);
     }
+    
     saveData();
+    showData();
 },false)
 
-function updateCount(){
-    var toDo=list.getElementsByTagName("li").length;
-    var completed=completedTask.getElementsByTagName("li").length;
-    document.getElementById("counter").textContent=`To-Do: ${toDo} | Completed: ${completed}`;
-    
-    
+function saveData(){
+    localStorage.setItem("todoList",JSON.stringify(toDoList));
+    localStorage.setItem("completedList",JSON.stringify(completedList));
+    localStorage.setItem("count",JSON.stringify(todoCount));
+    updateCount();
 }
 
-function saveData(){
-    localStorage.setItem("todoList",list.innerHTML);
-    localStorage.setItem("completedList",completedTask.innerHTML)
-    localStorage.setItem("count",document.getElementById("counter").textContent);
-    updateCount();
-}
+
 function showData(){
-    list.innerHTML=localStorage.getItem("todoList");
-    completedTask.innerHTML=localStorage.getItem("completedList")
-    document.getElementById("counter").textContent=localStorage.getItem("count");
+    toDoList=JSON.parse(localStorage.getItem("todoList")) || [];
+    completedList=JSON.parse(localStorage.getItem("completedList")) || [];
+    
+    list.innerHTML="";
+    completedTask.innerHTML="";
+    todoCount.toDo=0;
+    todoCount.completed=0;
     updateCount();
-}   
+    toDoList.forEach(element => {
+        addItem(element);
+    });
+    completedList.forEach(element => {
+        addCompletedItem(element);
+    });
+}  
 showData();
 
-window.onload=function(){
-    inputTask.focus();
+function updateCount(){
+    let toDo=JSON.parse(localStorage.getItem("todoList") || []).length;
+    let completed=JSON.parse(localStorage.getItem("completedList") || []).length;
+    todoCount.toDo=toDo;
+    todoCount.completed=completed;   
+    document.getElementById("counter").textContent=`To-Do: ${todoCount.toDo} | Completed: ${todoCount.completed || 0}`;
+    
 }
+
+window.onload=function(){
+    inputBox.focus();
+}
+
+changeTheme = () => {
+    const body = document.body;
+    const darkThemeButton = document.querySelector('.dark-Light-Theme');
+    
+    if (body.classList.contains('DarkTheme')) {
+        body.classList.remove('DarkTheme');
+        darkThemeButton.textContent = 'Dark Theme';
+        document.querySelectorAll('button').forEach(button => {
+            button.classList.remove('darkThemeButton');
+        })
+
+    } else {
+        body.classList.add('DarkTheme');
+        darkThemeButton.textContent = 'Light Theme';
+                
+        document.querySelectorAll('button').forEach(button => {
+            button.classList.add('darkThemeButton');
+        })
+
+        
+    }
+}
+
+
