@@ -1,0 +1,29 @@
+.add-todo-form{
+    background-color: aqua;
+    padding:50px 20px;
+    /* position:absolute; */
+    width: 100vw;
+}
+.form input{
+    width: 80%;
+    border:none;
+    height:30px;
+    font-size: 20px;
+    padding:10px;
+}
+
+.form button{
+    background-color: rgb(15, 46, 187);
+    padding:10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    margin: 20px 0px;
+}
+.form button:hover{
+    cursor:pointer;
+    background-color: slateblue;
+}
+.form button:active{
+    background-color: aqua;
+}

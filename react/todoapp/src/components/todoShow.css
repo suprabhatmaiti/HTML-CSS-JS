@@ -1,0 +1,15 @@
+.todo-show{
+    margin: 20px;
+    padding:10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    width: 80%;
+    border-radius: 10px;
+}
+.todo{
+    display: flex;
+    font-size: larger;
+    /* font-weight: bold; */
+}
